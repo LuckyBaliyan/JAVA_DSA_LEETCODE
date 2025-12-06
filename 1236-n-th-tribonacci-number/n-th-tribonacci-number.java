@@ -5,7 +5,9 @@ class Solution {
         long [] dp = new long [n+1];
         //return (int) tribonacciMemo(n,dp);
 
-        return (int) tribonacciTab(n,dp);
+        //return (int) tribonacciTab(n,dp);
+
+        return (int) tribonacciSpaceOpti(n);
     }
 
    /* By Plain Recursion
@@ -32,7 +34,7 @@ class Solution {
     }
     */
 
-    public long tribonacciTab(int n,long [] dp){
+    /*public long tribonacciTab(int n,long [] dp){
         if(n <= 0)return 0;
         if(n<=2)return 1;
         dp[0] = 0;
@@ -44,5 +46,24 @@ class Solution {
         }
 
         return dp[n];
+    }
+    */
+
+    public static long tribonacciSpaceOpti(int n){
+        if(n<=0)return 0;
+        if(n<=2)return 1;
+
+        long prev3 = 0;
+        long prev2 = 1;
+        long prev = 1;
+
+        for(int i = 3;i<=n;i++){
+            long curr = prev+prev2+prev3;
+            prev3 = prev2;
+            prev2 = prev;
+            prev = curr;
+        }
+
+        return prev;
     }
 }
