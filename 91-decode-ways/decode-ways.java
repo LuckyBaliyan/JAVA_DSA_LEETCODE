@@ -4,8 +4,9 @@ class Solution {
         int [] dp = new int [n+1];
         //return numDecodingsRec(s,0,n);
 
-        Arrays.fill(dp,-1);
-        return solveMemo(s,0,n,dp);
+        //Arrays.fill(dp,-1);
+        return solveTb(s,dp);
+        //return solveMemo(s,0,n,dp);
     }
 
     /* plain recursion
@@ -27,7 +28,7 @@ class Solution {
     }
     */
 
-    public static int solveMemo(String s,int i,int n,int [] dp){
+    /*public static int solveMemo(String s,int i,int n,int [] dp){
         if(i == n)return 1;
         if(s.charAt(i) == '0')return 0;
 
@@ -45,5 +46,24 @@ class Solution {
 
         dp[i] = ways;
         return dp[i];
+    }*/
+
+    public static int solveTb(String s,int [] dp){
+        int n = s.length();
+        dp[0] = 1;
+        dp[1] = (s.charAt(0) == '0')?0:1;
+
+        for(int i=2;i<=n;i++){
+            if(s.charAt(i-1) != '0'){
+                dp[i] += dp[i-1];
+            }
+
+            int num = Integer.parseInt(s.substring(i-2,i));
+            if(num >= 10 && num <= 26){
+                dp[i] += dp[i-2];
+            }
+        }
+
+        return dp[n];
     }
 }
