@@ -5,8 +5,10 @@ class Solution {
         //return numDecodingsRec(s,0,n);
 
         //Arrays.fill(dp,-1);
-        return solveTb(s,dp);
+        //return solveTb(s,dp);
         //return solveMemo(s,0,n,dp);
+
+        return solveTbSpace(s);
     }
 
     /* plain recursion
@@ -48,7 +50,7 @@ class Solution {
         return dp[i];
     }*/
 
-    public static int solveTb(String s,int [] dp){
+   /* public static int solveTb(String s,int [] dp){
         int n = s.length();
         dp[0] = 1;
         dp[1] = (s.charAt(0) == '0')?0:1;
@@ -65,5 +67,29 @@ class Solution {
         }
 
         return dp[n];
+    }
+    */
+
+     public static int solveTbSpace(String s){
+        int n = s.length();
+        int prev2 = 1;
+        int prev = (s.charAt(0) == '0')?0:1;
+
+        for(int i=2;i<=n;i++){
+            int curr = 0;
+            if(s.charAt(i-1) != '0'){
+                curr += prev;
+            }
+
+            int num = Integer.parseInt(s.substring(i-2,i));
+            if(num >= 10 && num <= 26){
+                curr += prev2;
+            }
+
+            prev2 = prev;
+            prev = curr;
+        }
+
+        return prev;
     }
 }
