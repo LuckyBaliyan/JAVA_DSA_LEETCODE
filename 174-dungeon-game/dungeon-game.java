@@ -6,7 +6,35 @@ class Solution {
 
         int [][] dp = new int [n][m];
 
-        return solve(dungeon,0,0,dp);
+        return solveTab(dungeon);
+    }
+
+    public static int solveTab(int [][] arr){
+        int n = arr.length;
+        int m = arr[0].length;
+
+        int [][] dp = new int [n][m];
+        dp[n-1][m-1] = Math.max(1,1-arr[n-1][m-1]);
+
+        for(int i = n-2;i>=0;i--){
+            dp[i][m-1] = Math.max(1,dp[i+1][m-1] - arr[i][m-1]);
+        }
+
+        for(int i = m-2;i>=0;i--){
+            dp[n-1][i] = Math.max(1,(dp[n-1][i+1] - arr[n-1][i]));
+        }
+
+        for(int i = n-2;i>=0;i--){
+            for(int j = m-2;j>=0;j--){
+                int right = dp[i][j+1];
+                int down = dp[i+1][j];
+
+                int result = Math.min(right,down) - arr[i][j];
+                dp[i][j] = Math.max(1,result);
+            }
+        }
+
+        return dp[0][0];
     }
 
     public static int solve(int [][] arr,int i,int j,int [][] dp){
