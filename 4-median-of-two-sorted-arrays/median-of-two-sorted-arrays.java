@@ -3,6 +3,50 @@ class Solution {
         int m = nums1.length;
         int n = nums2.length;
 
+        int size = n+m;
+        int id1= size/2;
+        int id2 = id1 - 1;
+        int count  = 0;
+        int el1 = Integer.MIN_VALUE;
+        int el2 = Integer.MIN_VALUE;
+
+        int i =0;int j =0;
+
+        while(i<m && j<n){
+            if(nums1[i] <= nums2[j]){
+                if(count == id1)el1 = nums1[i];
+                if(count  == id2)el2 = nums1[i];
+                i++;
+            }
+            else{
+                if(count == id1)el1 = nums2[j];
+                if(count == id2)el2 = nums2[j];
+                j++;
+            }
+            count++;
+            if(el1 != Integer.MIN_VALUE && el2  != Integer.MIN_VALUE)break;
+        }
+
+        while(i<m){
+            if(count == id1)el1 = nums1[i];
+            if(count  == id2)el2 = nums1[i];
+            i++;
+            count++;
+        }
+
+        while(j<n){
+            if(count == id1)el1 = nums2[j];
+            if(count == id2)el2 = nums2[j];
+            j++;
+            count++;
+        }
+
+        if(size%2!= 0)return el1;
+        else return (el1 + el2)/2.0;
+
+
+
+/*
         int [] arr = new int [m+n];
         int k = 0;int l =0;int r = 0;
 
@@ -30,6 +74,7 @@ class Solution {
         else{
            return (double) (arr[(n+m)/2]+arr[((n+m)/2)-1])/2;
         }
+*/
  
     }
 }
