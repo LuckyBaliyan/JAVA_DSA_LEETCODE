@@ -1,21 +1,38 @@
 class Solution {
+    public static final int INF = (int) 1e9;
     public int coinChange(int[] coins, int amount) {
-         int max = amount + 1;
-        int[] dp = new int[amount + 1];
-        
-        for (int i = 1; i <= amount; i++) {
-            dp[i] = max;
-        }
-        dp[0] = 0;
+        int n = coins.length;
+        int dp[][] = new int [n][amount + 1];
+        for(int [] arr:dp)Arrays.fill(arr,-1);
+        int ans =  solve(coins,n-1,amount,dp);
+        return ans >= INF ? -1:ans;
+    }
 
-        for (int i = 1; i <= amount; i++) {
-            for (int coin : coins) {
-                if (coin <= i) {
-                    dp[i] = Math.min(dp[i], dp[i - coin] + 1);
-                }
-            }
-        }
+   /* Plain Recursion 
+    public static int solve(int [] arr,int i,int target){
+        if(target == 0)return 0;
+        if(target < 0)return INF;
+        if(i < 0)return INF;
 
-        return dp[amount] > amount ? -1 : dp[amount];
+        int skip = solve(arr,i-1,target);
+
+        //not i-1 because we can use it ultimately
+        int choose = 1 + solve(arr,i,target - arr[i]);
+        return Math.min(skip,choose);
+    }
+    */
+
+    public static int solve(int [] arr,int i,int target,int [][] dp){
+        if(target == 0)return 0;
+        if(target < 0)return INF;
+        if(i < 0)return INF;
+
+        if(dp[i][target] != -1)return dp[i][target];
+
+        int skip = solve(arr,i-1,target,dp);
+
+        //not i-1 because we can use it ultimately
+        int choose = 1 + solve(arr,i,target - arr[i],dp);
+        return dp[i][target] =  Math.min(skip,choose);
     }
 }
