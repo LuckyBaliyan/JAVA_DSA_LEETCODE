@@ -1,8 +1,8 @@
 class Solution {
     public int change(int amount, int[] coins) {
         int n = coins.length;
-        int [][] dp = new int [n][amount + 1];
-        for(int [] arr: dp)Arrays.fill(arr,-1);
+        //int [][] dp = new int [n][amount + 1];
+        //for(int [] arr: dp)Arrays.fill(arr,-1);
         return solve(coins,amount);
     }
 
