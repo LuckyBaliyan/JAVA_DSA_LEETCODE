@@ -9,6 +9,7 @@ class Solution {
         return solve(word1,word2,0,0,dp);
     }
 
+    //Memoization -->
     public static int solve(String w1, String w2,int i,int j,int [][] dp){
         int n1 = w1.length();
         int n2 = w2.length();
@@ -20,7 +21,7 @@ class Solution {
         if(dp[i][j] != -1)return dp[i][j];
 
         if(w1.charAt(i) == w2.charAt(j)){
-            return dp[i][j] = solve(w1,w2,i+1,j+1,dp);
+            return solve(w1,w2,i+1,j+1,dp);
         }
 
         int insert = solve(w1,w2,i+1,j,dp);
