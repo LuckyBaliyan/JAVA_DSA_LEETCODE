@@ -15,7 +15,7 @@ class Solution {
         if(dp[i][j] != -1)return dp[i][j];
 
         if(s.charAt(i) == s.charAt(j)){
-            return dp[i][j] =  solveMemo(s, i+1, j-1,dp);
+            return solveMemo(s, i+1, j-1,dp);
         }
 
         return dp[i][j] = 1 + Math.min(solveMemo(s,i+1,j,dp),solveMemo(s,i,j-1,dp)); 
