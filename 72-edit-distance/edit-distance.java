@@ -30,4 +30,17 @@ class Solution {
 
         return dp[i][j] =  1 + Math.min(insert,Math.min(del,rep));
     }
+
+    //Tabulation
+   /* public static int solveTab(String w1,String w2){
+        int n1 = w1.length();
+        int n2 = w2.length();
+
+        int [][] dp = new int [n1][n2];
+
+        for(int i = 0;i<n1;i++){
+            
+        }
+    }
+    */
 }
