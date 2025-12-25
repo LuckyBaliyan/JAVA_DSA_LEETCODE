@@ -3,10 +3,12 @@ class Solution {
         int n1 = word1.length();
         int n2 = word2.length();
 
-        int [][] dp = new int [n1][n2];
-        for(int [] arr:dp)Arrays.fill(arr,-1);
+        //int [][] dp = new int [n1][n2];
+        //for(int [] arr:dp)Arrays.fill(arr,-1);
 
-        return solve(word1,word2,0,0,dp);
+        //return solve(word1,word2,0,0,dp);
+
+        return solveTab(word1,word2);
     }
 
     //Memoization -->
@@ -32,15 +34,38 @@ class Solution {
     }
 
     //Tabulation
-   /* public static int solveTab(String w1,String w2){
+    public static int solveTab(String w1,String w2){
         int n1 = w1.length();
         int n2 = w2.length();
 
-        int [][] dp = new int [n1][n2];
+        if(n1 == 0 && n2 == 0)return 0;
 
-        for(int i = 0;i<n1;i++){
-            
+        int [][] dp = new int [n1+1][n2+1];
+
+        //filling up the columns
+        for(int i = n2;i>=0;i--){
+            dp[n1][i] = n2-i;
         }
+
+        //filling up the last row
+        for(int j = n1;j>=0;j--){
+            dp[j][n2] = n1 - j;
+        }
+
+        for(int i = n1-1;i>=0;i-- ){
+            for(int j = n2-1;j>=0;j--){
+                if(w1.charAt(i) == w2.charAt(j)) dp[i][j] = dp[i+1][j+1];
+                else{
+                    int ins = dp[i+1][j];
+                    int rep = dp[i+1][j+1];
+                    int del = dp[i][j+1];
+
+                    dp[i][j] = 1 + Math.min(Math.min(ins,rep),del);
+                }
+            }
+        }
+
+        return dp[0][0];
     }
-    */
+    
 }
