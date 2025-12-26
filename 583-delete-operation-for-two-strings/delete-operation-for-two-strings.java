@@ -3,10 +3,11 @@ class Solution {
         int n1 = word1.length();
         int n2 = word2.length();
 
-        int [][] dp = new int [n1+1][n2+1];
-        for(int [] arr:dp)Arrays.fill(arr,-1);
+        //int [][] dp = new int [n1+1][n2+1];
+        //for(int [] arr:dp)Arrays.fill(arr,-1);
 
-        return solve(word1,word2,n1,n2,0,0,dp);
+        //return solve(word1,word2,n1,n2,0,0,dp);
+        return solveTab(word1,word2);
     }
 
     public static int solve(String t1,String t2,int n1,int n2,int i,int j,int [][] dp){
