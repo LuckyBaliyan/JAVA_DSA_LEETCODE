@@ -1,6 +1,21 @@
 class Solution {
     public String reverseWords(String s) {
-        int n = s.length();
+       
+       //return bruteSOl(s);
+       String [] words = s.trim().split("\\s+");
+       StringBuilder sb = new StringBuilder();
+
+       for(int i = words.length - 1;i>=0;i--){
+          sb.append(words[i]);
+          if(i > 0)sb.append(" ");
+       }
+
+       return sb.toString();
+
+    }
+
+    public static String bruteSOl(String s){
+         int n = s.length();
 
         StringBuilder sb = new StringBuilder();
         int end = n-1;
@@ -20,6 +35,5 @@ class Solution {
         }
 
         return sb.toString().trim();
-
     }
 }
