@@ -4,6 +4,8 @@ class Solution {
        if(n == 0)return "";
        Arrays.sort(strs);
 
+       /*
+
        StringBuilder sb = new StringBuilder();
        String firstPrifix = strs[0];
        int cnt  = firstPrifix.length();
@@ -37,5 +39,20 @@ class Solution {
 
        sb.append(firstPrifix.substring(0,cnt));
        return sb.toString();
+       */
+
+       //simply u can say that all the same appearing and length strings must have 
+       //been sorted together now if they all share a comman prefix so the first and   last also and last can be of smallest size in possible cases and we just want to find the comman prefix among all
+
+       String first  = strs[0];
+       String last = strs[n-1];
+
+       if(first.equals(last))return first;
+
+       for(int i = 0;i<Math.min(first.length(),last.length());i++){
+        if(first.charAt(i) != last.charAt(i))return first.substring(0,i);
+       }
+
+       return first.substring(0,Math.min(first.length(),last.length()));
     }
 }
