@@ -52,4 +52,28 @@ class Solution {
         }
 
     }
+    
+    public static int solveTab(int [] prices,int k){
+        int n = prices.length;
+
+        int [][][] dp  = new int [n+1][k+1][2];
+
+        for(int i = n-1;i>=0;i--){
+            int p = 0;
+            for(int j = 0;j<=k;j++){
+                for(int l = 0;l<2;l++){
+                  if(l == 1){
+                    p = Math.max(dp[i+1][j][0] - prices[i],dp[i+1][j][1]);
+                  }
+                  else{
+                    p = Math.max(dp[i+1][j][1] + prices[i],dp[i+1][j][0]);
+                  }
+
+                  dp[i+1][j][l] = p;
+                }
+            }
+        }
+
+        return  dp[0][0][1];
+    }
 }
