@@ -1,10 +1,11 @@
 class Solution {
     public int maxProfit(int[] prices) {
         int n = prices.length;
-        int [][] dp = new int [n+1][2];
-        for(int [] arr:dp)Arrays.fill(arr,-1);
+       // int [][] dp = new int [n+1][2];
+        //for(int [] arr:dp)Arrays.fill(arr,-1);
         //return solve(prices,0,n, true);
-        return solveMemo(prices,0,n,1,dp);
+        //return solveMemo(prices,0,n,1,dp);
+        return solveTab(prices);
     }
 
     //recursive solution
