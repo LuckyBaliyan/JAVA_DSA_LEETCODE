@@ -2,7 +2,7 @@ class Solution {
     public int maxProfit(int k, int[] prices) {
         int n = prices.length;
 
-        int [][][] dp = new int [n+1][k+1][2];
+       /* int [][][] dp = new int [n+1][k+1][2];
 
         for(int [][] arr : dp){
             for(int [] arr1: arr)Arrays.fill(arr1,-1);
@@ -10,6 +10,9 @@ class Solution {
 
         //return solve(prices,0,n,k,1);
         return solveMemo(prices,0,n,k,1,dp);
+        */
+
+        return solveTab(prices,k);
     }
 
     //recursion
@@ -60,20 +63,20 @@ class Solution {
 
         for(int i = n-1;i>=0;i--){
             int p = 0;
-            for(int j = 0;j<=k;j++){
+            for(int j = 1;j<=k;j++){
                 for(int l = 0;l<2;l++){
                   if(l == 1){
                     p = Math.max(dp[i+1][j][0] - prices[i],dp[i+1][j][1]);
                   }
                   else{
-                    p = Math.max(dp[i+1][j][1] + prices[i],dp[i+1][j][0]);
+                    p = Math.max(dp[i+1][j - 1][1] + prices[i],dp[i+1][j][0]);
                   }
 
-                  dp[i+1][j][l] = p;
+                  dp[i][j][l] = p;
                 }
             }
         }
 
-        return  dp[0][0][1];
+        return  dp[0][k][1];
     }
 }
