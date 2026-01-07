@@ -1,6 +1,7 @@
 class Solution {
     public int maxProfit(int[] prices) {
         int n = prices.length;
+
         int [][][] dp = new int [n+1][2][3];
         for(int i = 0;i<n;i++){
             for(int j = 0;j<2;j++){
@@ -35,6 +36,27 @@ class Solution {
             return dp[i][flag][limit] = Math.max(-prices[i]+solveMemo(prices,i+1,n,0,limit,dp), solveMemo(prices,i+1,n,1,limit,dp));
         }
         else return dp[i][flag][limit] = Math.max(prices[i]+solveMemo(prices,i+1,n,1,limit-1,dp),solveMemo(prices,i+1,n,0,limit,dp));
+    }
+
+    public static int solveTab(int [] prices){
+        int n = prices.length;
+
+        int [][][] dp = new int [n+1][2][3];
+
+        for(int i = 0;i<n;i++){
+            int profit = 0;
+            for(int j = 0;j<2;j++){
+                for(int k = 0;k<3;k++){
+                    if(k == 0) continue;
+                    if(j == 0){
+                        profit = Math.max(-prices[i]+dp[i+1][0][k],dp[i+1][1][k]);
+                    }
+                    else profit = Math.max(prices[i]+dp[i+1][1][k],dp[i+1][0][k]);
+                }
+            }
+        } 
+
+        return dp[0][1][2];
     }
 
 }
