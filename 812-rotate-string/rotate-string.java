@@ -1,6 +1,7 @@
 class Solution {
     public boolean rotateString(String s, String goal) {
-        return app1(s,goal);
+        //return app1(s,goal);
+        return app2(s,goal);
     }
 
     public static boolean app1(String s,String goal){
