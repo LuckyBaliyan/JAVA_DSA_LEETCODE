@@ -1,12 +1,12 @@
 class Solution {
     public int lengthOfLIS(int[] nums) {
         int n  = nums.length;
-        int [][] dp = new int [n+1][n+1];
+        //int [][] dp = new int [n+1][n+1];
 
-        for(int [] arr:dp)Arrays.fill(arr,-1);
+        //for(int [] arr:dp)Arrays.fill(arr,-1);
 
-        return solveMemo(nums,0,-1,n,dp);
-        //return tab(nums);
+        //return solveMemo(nums,0,-1,n,dp);
+        return tab(nums);
     }
 
     public static int tab(int [] nums){
