@@ -1,21 +1,17 @@
-# Write your MySQL query statement below
-SELECT p.product_id,
-       COALESCE(t.new_price, 10) AS price
-FROM
-(
-    SELECT DISTINCT product_id
+SELECT product_id, 10 AS price
+FROM Products
+GROUP BY product_id
+HAVING MIN(change_date) > '2019-08-16'
+
+UNION ALL
+
+SELECT P.product_id, P.new_price AS price
+FROM Products P
+INNER JOIN (
+    SELECT product_id, MAX(change_date) AS max_date
     FROM Products
-) p
-LEFT JOIN
-(
-    SELECT product_id, new_price
-    FROM Products
-    WHERE (product_id, change_date) IN
-    (
-        SELECT product_id, MAX(change_date)
-        FROM Products
-        WHERE change_date <= '2019-08-16'
-        GROUP BY product_id
-    )
-) t
-ON p.product_id = t.product_id;
+    WHERE change_date <= '2019-08-16'
+    GROUP BY product_id
+) AS R
+ON P.product_id = R.product_id
+AND P.change_date = R.max_date;
