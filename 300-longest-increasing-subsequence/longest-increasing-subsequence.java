@@ -15,7 +15,7 @@ class Solution {
         int [][] dp = new int [n+1][n+1];
 
         for(int i = n-1;i>=0;i--){
-            for(int prev = -1;prev<=n-1;prev++){
+            for(int prev = -1;prev<=i-1;prev++){
                 int take = 0;
                 int skip = 0;
                 if(prev == -1 || nums[i] > nums[prev] ){
