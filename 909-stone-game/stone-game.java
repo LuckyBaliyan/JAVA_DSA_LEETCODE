@@ -4,8 +4,10 @@ class Solution {
        // int [][] dp = new int [n][n];
         // for(int [] a:dp)Arrays.fill(a,-1);
 
-        int diff =  solveTab(piles);
-        return diff > 0;
+        // int diff =  solveTab(piles);
+        // return diff > 0;
+
+        return true;
     }
 
     public static int solve(int [] arr,int l,int r,int [][] dp){
@@ -25,7 +27,7 @@ class Solution {
 
         int [] dp = new int [n];
 
-        for(int i = 1;i<n;i++){
+        for(int i = 0;i<n;i++){
             dp[i] = arr[i]; // Base Case
             for(int j = i - 1;j>=0;j--){
                 //quick tip while filling the 1D just focus on j because 
