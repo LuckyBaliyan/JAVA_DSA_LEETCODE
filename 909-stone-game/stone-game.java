@@ -23,17 +23,22 @@ class Solution {
     public static int solveTab(int [] arr){
         int n = arr.length;
 
-        int [][] dp = new int [n][n];
+        int [] dp = new int [n];
 
         for(int i = 1;i<n;i++){
+            dp[i] = arr[i]; // Base Case
             for(int j = i - 1;j>=0;j--){
-                dp[j][i] = Math.max(
-                    (arr[j] - dp[j+1][i]),
-                    (arr[i] - dp[j][i-1])
+                //quick tip while filling the 1D just focus on j because 
+                //Here is no role of i inside j loop and also we can see
+                //from max function we only need j+1 and j so we can optimize 
+                // it using 1D dp
+                dp[j] = Math.max(
+                    (arr[j] - dp[j+1]),
+                    (arr[i] - dp[j])
                 );
             }
         }
 
-        return dp[0][n-1];
+        return dp[0];
     }
 }
