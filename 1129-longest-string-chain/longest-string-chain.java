@@ -53,21 +53,24 @@ class Solution {
     public static int solveTab(String [] arr){
         int n = arr.length;
 
-        int [][] dp = new int [n+1][n+1];
+       // int [][] dp = new int [n+1][n+1];
+       int [] curr = new int [n+1];
+       int [] next = new int [n+1];
 
         for(int i = n-1;i>=0;i--){
             for(int prev = -1;prev<=i-1;prev++){
                 int take = 0;
                 if(prev == -1 || (arr[i].length() - arr[prev].length() == 1 && 
                 isValid(arr[i],arr[prev]))){
-                   take = dp[i+1][i+1] + 1;
+                   take = next[i+1] + 1;
                 }
 
-                int notTake = dp[i+1][prev + 1];
-                dp[i][prev+1] = Math.max(take,notTake);
+                int notTake = next[prev + 1];
+                curr[prev+1] = Math.max(take,notTake);
             }
+            next = curr.clone();
         }
 
-        return dp[0][0];
+        return next[0];
     }
 }
