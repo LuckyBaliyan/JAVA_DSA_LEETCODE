@@ -1,6 +1,6 @@
 # Write your MySQL query statement below
 select project_id,
-ROUND(SUM(e.experience_years) / count(e.employee_id),2)
+ROUND(SUM(e.experience_years) / count(p.employee_id),2)
 as average_years
 
 from Project as p
