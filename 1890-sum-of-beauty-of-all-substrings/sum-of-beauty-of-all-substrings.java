@@ -1,4 +1,6 @@
 class Solution {
+
+    // O(N^2) * O(26)
     public int beautySum(String s) {
         int n = s.length();
         int sum = 0;
@@ -11,7 +13,7 @@ class Solution {
                int maxFreq = Integer.MIN_VALUE;
                int minFreq = Integer.MAX_VALUE;
 
-               for(int val:freq.values()){
+               for(int val:freq.values()){ // --> atMax can go till O(26)
                 maxFreq = Math.max(maxFreq,val);
                 minFreq = Math.min(minFreq,val);
                }
