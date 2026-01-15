@@ -1,6 +1,42 @@
 class Solution {
     public String longestPalindrome(String s) {
+       //return extremeNaive(s);
+       return solveDp(s);
+    }
+
+    public static String solveDp(String s){
         int n = s.length();
+
+        if(n == 0)return "";
+        if(n==1)return s;
+
+        boolean [][] dp = new boolean [n][n];
+
+        for(int i = 0;i<n;i++)dp[i][i] = true;
+        
+        int maxlen = 1;
+        int start = 0;
+
+        for(int len = 2;len <= n;len++){
+            for(int l = 0;l+len-1<n;l++){
+                int r = l + len -1;
+                if(s.charAt(l) == s.charAt(r)){
+                    if(len == 2 || dp[l+1][r-1]){
+                        dp[l][r] = true;
+                        if(len > maxlen){
+                            start = l;
+                            maxlen = len;
+                        }
+                    }
+                }
+            }
+        }
+
+        return s.substring(start,maxlen + start);
+    }
+    // O(n^3) --> Brute Force
+    public static String extremeNaive(String s){
+           int n = s.length();
         int maxLen = 0;
 
         StringBuilder res = new StringBuilder();
