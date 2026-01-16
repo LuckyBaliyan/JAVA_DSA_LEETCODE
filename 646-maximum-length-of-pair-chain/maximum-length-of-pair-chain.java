@@ -6,12 +6,11 @@ class Solution {
     public static int solveDp(int [][] arr){
         int n = arr.length;
 
-        Arrays.sort(arr,(a,b)-> Integer.compare(a[0] , b[0])); // sort based on right values
+        Arrays.sort(arr,(a,b)-> a[0] - b[0]);
+        // sort based on right values
 
         int [] dp = new int [n];
         Arrays.fill(dp,1);
-
-        int res = 1;
 
         for(int i = 1;i<n;i++){
             for(int j = 0;j<=i-1;j++){
