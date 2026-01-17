@@ -1,14 +1,14 @@
 class Solution {
     public int longestOnes(int[] nums, int k) {
-      return sw(nums,k); // O(N), O(1); 
-      // return bs(nums,k); --> O(N log N), O(1)
+      //return sw(nums,k); // O(N), O(1); 
+      return bs(nums,k); //--> O(N log N), O(1)
     }
 
     public  static int bs(int [] nums,int k){
         int n = nums.length;
 
         int l = 0;
-        int h = n-1;
+        int h = n;
 
         while(l<=h){
             int mid = l+(h-l)/2;
