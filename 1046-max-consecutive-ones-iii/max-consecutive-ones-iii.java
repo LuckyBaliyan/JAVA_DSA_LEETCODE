@@ -1,7 +1,7 @@
 class Solution {
     public int longestOnes(int[] nums, int k) {
-      //return sw(nums,k); // O(N), O(1); 
-      return bs(nums,k);
+      return sw(nums,k); // O(N), O(1); 
+      // return bs(nums,k); --> O(N log N), O(1)
     }
 
     public  static int bs(int [] nums,int k){
