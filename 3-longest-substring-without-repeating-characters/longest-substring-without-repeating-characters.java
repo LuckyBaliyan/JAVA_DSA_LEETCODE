@@ -2,11 +2,11 @@ class Solution {
     public int lengthOfLongestSubstring(String s) {
       // return slidingWindow(s); --> O(N),O(N)
 
-        return solveMap(s);
+        return solveSet(s);
 
     }
 
-    public static int solveMap(String s){
+    public static int solveSet(String s){
         int n = s.length();
         HashSet<Character> st = new HashSet<>();
 
