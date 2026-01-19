@@ -1,10 +1,10 @@
 class Solution {
     public int maxCapacity(int[] costs, int[] capacity, int budget) {
         //return bs(costs,capacity,budget);
-        return dp(costs,capacity,budget);
+        return sortBs(costs,capacity,budget);
     }
 
-    public static int dp(int [] costs,int [] capacity,int budget){
+    public static int sortBs(int [] costs,int [] capacity,int budget){
         int n = costs.length;
 
         int [][] machines = new int[n][2];
@@ -26,8 +26,6 @@ class Solution {
         for(int i = 1;i<n;i++){
             maxCap[i] = Math.max(maxCap[i-1],machines[i][1]);
         }
-
-        //int ans = 0;
         
 
         for(int i = 0;i<n;i++){
