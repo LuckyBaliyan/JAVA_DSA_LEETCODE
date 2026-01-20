@@ -1,15 +1,39 @@
 class Solution {
-    public static int [] dp;
+    //public static int [] dp;
     public boolean canJump(int[] nums) {
-        dp = new int [nums.length];
-        Arrays.fill(dp,-1);
+        //dp = new int [nums.length];
+        //Arrays.fill(dp,-1);
         //return solveRec(nums,0);
 
-        int res = solveMemo(nums,0,dp);
+        /*int res = solveMemo(nums,0,dp);
         return res == 0?false:true;
+        */
+
+        return solveTab(nums) == 0?false:true;
+        //O(N*K) , O(N)
     }
 
-      public static int solveMemo(int [] arr,int p,int [] dp){
+    public static int solveTab(int [] nums){
+        int n = nums.length;
+
+        int [] dp = new int [n];
+
+        dp[n-1] = 1;
+
+        for(int i = n-2;i>=0;i--){
+            for(int j = 1;j<=nums[i];j++){
+                if(dp[i+j] == 1){
+                    dp[i] = 1;
+                    break;
+                }
+            }
+        }
+
+        return dp[0];
+    }
+
+    // Memoization Approach --> O(N*K) , O(2N)
+    public static int solveMemo(int [] arr,int p,int [] dp){
         int n = arr.length;
 
         if(p>=n)return 0;
