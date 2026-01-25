@@ -12,7 +12,7 @@ class Solution {
         --> O(m*n), O(m*n) + O(m+n)
         */
 
-        return solveTab(obstacleGrid);
+        return solveTab(obstacleGrid); // --> O(m*n), O(n)
     }
 
     public int solveTab(int [][] grid){
@@ -21,19 +21,25 @@ class Solution {
 
         if(grid[m-1][n-1] == 1)return 0;
 
-        dp = new int [m+1][n+1];
+       // dp = new int [m+1][n+1];
 
-        dp[m-1][n-1] = 1;
+       //space optimization
+       int [] curr = new int [n+1];
+       int [] next = new int [n+1];
+
+        next[n-1] = 1;
 
         for(int i = m-1;i>=0;i--){
             for(int j = n-1;j>=0;j--){
-                if(grid[i][j] == 1)continue;
-                else if (i == m-1 && j == n-1)continue;
-                else dp[i][j] = dp[i+1][j] + dp[i][j+1];
+                if(grid[i][j] == 1)curr[j] = 0;
+                else if (i == m-1 && j == n-1) curr[j] = 1;
+                else curr[j] = curr[j+1] + next[j];
             }
+
+            next = curr.clone();
         }
 
-        return dp[0][0];
+        return next[0];
     }
 
     public int solveMemo(int [][] grid,int i,int j,int [][] dp){
