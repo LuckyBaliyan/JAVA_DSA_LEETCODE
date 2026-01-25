@@ -4,7 +4,9 @@ class Solution {
         // return solveRec(obstacleGrid,0,0); --> O(2^(m+n)), O(m+n)
         int m = obstacleGrid.length;
         int n = obstacleGrid[0].length;
-
+        
+        if(obstacleGrid[m-1][n-1] == 1)return 0;
+        
         dp = new int [m][n];
         return solveMemo(obstacleGrid,0,0,dp);
     }
