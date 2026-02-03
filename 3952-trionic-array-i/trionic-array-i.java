@@ -1,35 +1,37 @@
 class Solution {
     public boolean isTrionic(int[] nums) {
-        int n = nums.length;
-        if (n < 4) return false;
+       int n = nums.length;
+    
+       // We can make the graph of Inc -> dec -> Inc from len 3 or smaller
+       if(n < 4)return false;
 
-        int p = -1, q = -1, c = -1;
+       int p = -1,q = -1,c = -1;
 
-        // 1️⃣ Increasing
-        for (int i = 0; i < n - 1; i++) {
-            if (nums[i] < nums[i + 1]) continue;
-            p = i;
-            break;
-        }
-        if (p <= 0) return false;   // must have at least one increase
+       for(int i = 0;i<n-1;i++){
+         if(nums[i] < nums[i+1])continue;
+         p = i;
+         break;
+       }
 
-        // 2️⃣ Decreasing (START FROM p)
-        for (int i = p; i < n - 1; i++) {
-            if (nums[i] > nums[i + 1]) continue;
-            q = i;
-            break;
-        }
-        if (q <= p) return false;   // must have at least one decrease
+       if(p <= 0)return false;
 
-        // 3️⃣ Increasing (START FROM q)
-        for (int i = q; i < n - 1; i++) {
-            if (nums[i] < nums[i + 1]) continue;
-            c = i;
-            break;
-        }
+       for(int i = p;i<n-1;i++){
+        if(nums[i] > nums[i+1])continue;
+        q = i;
+        break;
+       }
 
-        if (c == -1) c = n - 1;
+       if(q<=p)return false;
 
-        return q < c && c == n - 1;
+       for(int i = q;i<n-1;i++){
+        if(nums[i] < nums[i+1])continue;
+        c = i;
+        break;
+       }
+
+       if(c == -1)c = n-1;
+
+       return q < c && c == n-1;
+
     }
 }
