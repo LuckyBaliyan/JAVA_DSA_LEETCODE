@@ -10,7 +10,7 @@
  */
 class Solution {
     public ListNode reverseList(ListNode head) {
-        Stack<Integer> st = new Stack<>();
+       /* Stack<Integer> st = new Stack<>();
 
         ListNode temp = head;
         while(temp != null){
@@ -25,5 +25,22 @@ class Solution {
         }
 
         return head;
+
+        */
+
+        //Method 2 Iterative
+        ListNode temp = head;
+        ListNode front = head;
+        ListNode prev = null;
+
+        while(temp != null){
+            front = temp.next;
+            temp.next = prev;
+            prev = temp;
+            temp = front;
+        }
+
+        return prev;
+
     }
 }
