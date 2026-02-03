@@ -29,7 +29,7 @@ class Solution {
         */
 
         //Method 2 Iterative
-        ListNode temp = head;
+       /* ListNode temp = head;
         ListNode front = head;
         ListNode prev = null;
 
@@ -41,6 +41,20 @@ class Solution {
         }
 
         return prev;
+        */
 
+        //Method 3 Recursive
+        return solve(head);
+    }
+
+    public ListNode solve(ListNode head){
+        if(head == null || head.next == null)return head;
+
+        ListNode newHead = solve(head.next);
+        ListNode front = head.next;
+        front.next = head;
+        head.next = null;
+
+        return newHead;
     }
 }
