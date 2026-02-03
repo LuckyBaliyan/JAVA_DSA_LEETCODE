@@ -11,7 +11,7 @@
  */
 public class Solution {
     public boolean hasCycle(ListNode head) {
-        HashSet<ListNode> st = new HashSet<>();
+        /*HashSet<ListNode> st = new HashSet<>();
 
         ListNode curr = head;
         while(curr != null){
@@ -19,6 +19,21 @@ public class Solution {
 
             st.add(curr);
             curr = curr.next;
+        }
+
+        return false;
+        */
+
+        //Method 2 Turtoise Alogtithm 
+
+        ListNode fast = head;
+        ListNode slow = head;
+
+        while(fast != null && fast.next != null){
+            fast = fast.next.next;
+            slow = slow.next;
+
+            if(fast == slow)return true;
         }
 
         return false;
