@@ -1,64 +1,68 @@
 class Solution {
-    long NEG = -100000000000000L;
-    Long[][] dp;
-
-    long f(int index, int status, int n, int[] nums) {
-        if (index == n) {
-            return status == 3 ? 0 : NEG;
-        }
-
-        if (dp[index][status] != null) return dp[index][status];
-
-        long take = NEG;
-        long notTake = NEG;
-
-        if (status == 0) {
-            notTake = f(index + 1, 0, n, nums);
-        }
-
-        if (status == 3) {
-            take = nums[index];
-        }
-
-        if (index + 1 < n) {
-            if (status == 0 && nums[index + 1] > nums[index]) {
-                take = Math.max(take, nums[index] + f(index + 1, 1, n, nums));
-            } 
-            else if (status == 1) {
-                if (nums[index + 1] > nums[index]) {
-                    take = Math.max(take, nums[index] + f(index + 1, 1, n, nums));
-                } else if (nums[index + 1] < nums[index]) {
-                    take = Math.max(take, nums[index] + f(index + 1, 2, n, nums));
-                }
-            } 
-            else if (status == 2) {
-                if (nums[index + 1] < nums[index]) {
-                    take = Math.max(take, nums[index] + f(index + 1, 2, n, nums));
-                } else if (nums[index + 1] > nums[index]) {
-                    take = Math.max(take, nums[index] + f(index + 1, 3, n, nums));
-                }
-            } 
-            else if (status == 3 && nums[index + 1] > nums[index]) {
-                take = Math.max(take, nums[index] + f(index + 1, 3, n, nums));
-            }
-        }
-
-        return dp[index][status] = Math.max(take, notTake);
-    }
-
-    public long maxSumTrionic(int[] nums) {
-        int n = nums.length;
-        dp = new Long[n][4];
-        return f(0, 0, n, nums);
-    }
-}
-
-/*class Solution {
+    long [][] dp;
     public long maxSumTrionic(int[] nums) {
         int n = nums.length;
 
         //Brute force Solution
-        return solveBrute(nums,n);
+        //return solveBrute(nums,n);
+
+        //Rec + Memo Solution Dp O(N)*O(4) ~ O(N)
+        dp = new long[n+1][4]; // i --> n and trends --> 0/1/2/3 total 4
+        for(long [] arr:dp)Arrays.fill(arr,Long.MIN_VALUE);
+
+        return solveMemo(nums,n,0,0,dp);
+    }
+
+    public static long solveMemo(int [] arr,int n,int i,int trend,long [][] dp){
+        if(i == n){
+            if(trend == 3){
+                return 0;
+            }
+            else return Long.MIN_VALUE;
+        }
+
+        if(dp[i][trend] != Long.MIN_VALUE)return dp[i][trend];
+
+        long skip = -(long)1e18;
+        long take = -(long)1e18;
+
+        if(trend == 0){
+            skip = solveMemo(arr,n,i+1,trend,dp);
+        }
+
+        if(trend == 3){
+            take = arr[i];
+        }
+
+        if(i+1 < n){
+            int curr = arr[i];
+            int next = arr[i+1];
+
+            if(trend == 0 && next > curr){
+                take = Math.max(take,curr + solveMemo(arr,n,i+1,1,dp));
+            }
+            else if (trend == 1){
+                if(next > curr){
+                    take = Math.max(take,curr + solveMemo(arr,n,i+1,1,dp));
+                }
+                else if (next < curr){
+                    take = Math.max(take,curr + solveMemo(arr,n,i+1,2,dp));
+                }
+            }
+            else if (trend == 2){
+                if(next < curr){
+                    take = Math.max(take,curr+solveMemo(arr,n,i+1,2,dp));
+                }
+                else if(next > curr){
+                    take = Math.max(take,curr + solveMemo(arr,n,i+1,3,dp));
+                }
+            }
+            else if(trend == 3 && next > curr){
+                take = Math.max(take,curr + solveMemo(arr,n,i+1,3,dp));
+            }
+        }
+
+        return dp[i][trend] = Math.max(take,skip);
     }
 
     public static long solveBrute(int [] arr,int n){
@@ -117,4 +121,3 @@ class Solution {
         return localSum;
     }
 }
-*/
