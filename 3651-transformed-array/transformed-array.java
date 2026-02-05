@@ -1,7 +1,23 @@
 class Solution {
     public int[] constructTransformedArray(int[] nums) {
-        int n = nums.length;
+        //return solve1(nums);
+        return solve2(nums);
+    }
 
+    public static int[] solve2(int [] nums){
+        int n = nums.length;
+        int [] res = new int[n];
+
+        for(int i = 0;i<n;i++){
+            int idx = (((i + nums[i])%n + n)%n);
+            res[i] = nums[idx];
+        }
+
+        return res;
+    }
+
+    public static int[] solve1(int [] nums){
+        int n = nums.length;
         int [] result = new int [n];
 
         for(int i = 0;i<n;i++){
@@ -12,7 +28,6 @@ class Solution {
             if(idx < 0){
                 idx += n;
             }
-
             result[i] = nums[idx];
         }
 
