@@ -9,12 +9,10 @@ class Solution {
         for(int j = 0;j<m;j++){
             if(board[0][j] == 'O' && !visited[0][j]){
                 dfs(board,visited,0,j,n,m);
-                board[0][j] = 'a';
             }
 
             if(board[n-1][j] == 'O' && !visited[n-1][j]){
                 dfs(board,visited,n-1,j,n,m);
-                board[n-1][j] = 'a';
             }
         }
 
@@ -22,12 +20,10 @@ class Solution {
         for(int i = 0;i<n;i++){
             if(board[i][0] == 'O' && !visited[i][0]){
                 dfs(board,visited,i,0,n,m);
-                board[i][0] = 'a';
             }
 
             if(board[i][m-1] == 'O' && !visited[i][m-1]){
                 dfs(board,visited,i,m-1,n,m);
-                board[i][m-1] = 'a';
             }
         }
 
