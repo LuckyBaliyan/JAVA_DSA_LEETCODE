@@ -29,7 +29,8 @@ public class Solution {
                    // is where the cycle detected that can be any point but we have
                    // to find the starting point of cycle
 
-                   // using L = c - x (turotise formula) 
+                   // using L = c - x (turotise formula) both needs comman L'steps to 
+                   // meet again 
                 }
 
                 return slow;
