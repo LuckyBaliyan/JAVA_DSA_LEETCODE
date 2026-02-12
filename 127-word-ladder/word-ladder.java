@@ -1,4 +1,55 @@
-class Solution {
+//Method 2 --> O(N^2 * 26)
+class Solution{
+    public int ladderLength(String beginWord,String endWord, List<String> wordList){
+        HashSet<String> st = new HashSet<>();
+
+        for(String w:wordList)st.add(w);
+
+        if(!st.contains(endWord))return 0;
+        return bfs(beginWord,wordList,endWord,st);
+    }
+
+    public static int bfs(String start,List<String> wordList,String end,      HashSet<String> st){
+        Queue<String> q = new LinkedList<>();
+        q.add(start);
+        st.remove(start);
+        int cnt =  1;
+
+        while(!q.isEmpty()){
+            int size = q.size();
+
+            for(int i = 0;i<size;i++){
+                String word = q.poll();
+
+                if(word.equals(end))return cnt;
+                char [] w = word.toCharArray();
+
+                for(int j = 0;j<w.length;j++){
+                    char original = w[j];
+
+                    for(char ch = 'a';ch<='z';ch++){
+                        w[j] = ch;
+
+                        String newWord = new String(w);
+
+                        if(st.contains(newWord)){
+                            q.add(newWord);
+                            st.remove(newWord);
+                        }
+                    }
+
+                    w[j] = original; //Restore the original word back;
+                }
+            }
+
+            cnt++;
+        }
+
+        return 0;
+    }
+}
+//Method 1 -- > O(N^2*M)
+/*class Solution {
     public int ladderLength(String beginWord, String endWord, List<String> wordList) {
         if(!wordList.contains(beginWord)){
             wordList.add(beginWord);
@@ -40,7 +91,7 @@ class Solution {
 
         while(!q.isEmpty()){
             int n = q.size();
-            
+
             for(int i = 0;i<n;i++){
                 int node = q.poll();
 
@@ -71,3 +122,4 @@ class Solution {
         return cnt == 1;
     }
 }
+*/
