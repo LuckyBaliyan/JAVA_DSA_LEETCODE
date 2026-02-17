@@ -19,6 +19,10 @@ class Solution{
         int r = curr[1];
         int c = curr[2];
 
+        if(effort > min[r][c])continue;
+
+        if(r == n-1 && c == m-1)return effort;
+
         for(int i = 0;i<4;i++){
             int nr = r + dr[i];
             int nc = c + dc[i];
