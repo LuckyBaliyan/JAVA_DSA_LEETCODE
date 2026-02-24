@@ -1,10 +1,15 @@
 class Solution {
     static int [] parent;
     static int [] size;
+
     public int[] findRedundantConnection(int[][] edges) {
-        // use dsu to simply connect edges and check which 
+        return viaDsu(edges);
+    }
+
+    public static int[] viaDsu(int [][] edges){
+         // use dsu to simply connect edges and check which 
         // Edges are already a part of a component and can cause 
-        // cycles 
+        // cycles. 
         int n = edges.length;
         parent  = new int[n+1];
         size = new int[n+1];
@@ -29,7 +34,7 @@ class Solution {
         else union(u,v);
        }
 
-       return res;        
+       return res;
     }
 
     public static void union(int u,int v){
