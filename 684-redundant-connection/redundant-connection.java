@@ -3,7 +3,54 @@ class Solution {
     static int [] size;
 
     public int[] findRedundantConnection(int[][] edges) {
-        return viaDsu(edges);
+        // O(alpha*(n)) usually TC for DSU
+        //return viaDsu(edges);
+
+
+        return viaDfs(edges);
+    }
+
+    public static int[] viaDfs(int [][] edges){
+        int n = edges.length;
+        int [] res = new int [2];
+
+        ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
+
+        for(int i = 0;i<=n;i++){
+            adj.add(new ArrayList<>());
+        }
+
+        for(int [] e:edges){
+            int u = e[0];
+            int v = e[1];
+
+            boolean [] visited = new boolean [n+1];
+
+            if(dfs(u,v,visited,adj)){
+                res[0] = u;
+                res[1] = v;
+            }
+            else{
+                adj.get(u).add(v);
+                adj.get(v).add(u);
+            }
+        }
+
+        return res;
+    }
+
+    public static boolean dfs(int node,int dest,boolean [] visited,
+    ArrayList<ArrayList<Integer>> adj){
+        visited[node] = true;
+        
+        if(node == dest)return true;
+        for(int ne:adj.get(node)){
+            if(!visited[ne]){
+                if(dfs(ne,dest,visited,adj))return true;
+            }
+        }
+
+        return false;
     }
 
     public static int[] viaDsu(int [][] edges){
