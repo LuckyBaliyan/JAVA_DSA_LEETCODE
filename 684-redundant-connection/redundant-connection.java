@@ -3,11 +3,11 @@ class Solution {
     static int [] size;
 
     public int[] findRedundantConnection(int[][] edges) {
-        // O(alpha*(n)) usually TC for DSU
-        //return viaDsu(edges);
+        // O(E * alpha*(n)) usually TC for DSU
+        return viaDsu(edges);
 
-
-        return viaDfs(edges);
+        // O(E * (v + E)) 
+        //return viaDfs(edges);
     }
 
     public static int[] viaDfs(int [][] edges){
