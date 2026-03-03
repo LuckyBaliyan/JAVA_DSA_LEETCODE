@@ -13,6 +13,8 @@ class Solution {
         for(int i = 0;i<n;i++)map.put(stones[i],i);
 
         //return solveRec(stones,0,0); --> O(3^n)
+    
+        // Memoization complexity --> O(n^2) and sc:- O(n^2) + O(n) (recStack)
         return (solveMemo(stones,0,0) == 1)?true:false;
     }
 
