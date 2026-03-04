@@ -1,6 +1,10 @@
 class Solution {
     public int numSpecial(int[][] mat) {
-        int m = mat.length;
+       return approach1(mat);
+    }
+
+    public int approach1(int [][] mat){
+         int m = mat.length;
         int n = mat[0].length;
 
         int specials = 0;
