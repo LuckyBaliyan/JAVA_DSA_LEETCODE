@@ -8,14 +8,52 @@ class Solution {
         map = new HashMap<>();
         dp = new int [n][n];
 
-        for(int [] a: dp)Arrays.fill(a,-1); 
+        //for(int [] a: dp)Arrays.fill(a,-1); 
 
         for(int i = 0;i<n;i++)map.put(stones[i],i);
 
         //return solveRec(stones,0,0); --> O(3^n)
     
         // Memoization complexity --> O(n^2) and sc:- O(n^2) + O(n) (recStack)
-        return (solveMemo(stones,0,0) == 1)?true:false;
+        //return (solveMemo(stones,0,0) == 1)?true:false;
+
+        return solveTab(stones);
+    }
+
+    public static boolean solveTab(int [] arr){
+        int n = arr.length;
+        
+        dp[0][0] = 1; //first stone is reachable always 
+
+        for(int i = 0;i<n;i++){
+            for(int j = 0;j<n;j++){
+
+                if(dp[i][j] == 0)continue; //expand only reachable stones
+
+                int first = j - 1;
+                int sec = j;
+                int third = j + 1;
+
+                if(first >= 0 && first < n && map.containsKey(first + arr[i])){
+                    dp[map.get(first + arr[i])][first] = 1;
+                }
+
+                if(sec >= 0 && sec < n && map.containsKey(sec  + arr[i])){
+                    dp[map.get(sec + arr[i])][sec] = 1;
+                }
+
+                if(third >= 0 && third < n && map.containsKey(third + arr[i])){
+                    dp[map.get(third + arr[i])][third] = 1;
+                }
+            }
+        }
+        
+        //check if last stone is reachable from any value of j
+        for(int i = 0;i<n;i++){
+            if(dp[n-1][i] == 1)return true;
+        }
+
+        return false;
     }
 
     public static int solveMemo(int [] arr,int i,int k){
