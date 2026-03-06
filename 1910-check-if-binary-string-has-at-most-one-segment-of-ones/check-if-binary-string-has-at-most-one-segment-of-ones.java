@@ -1,8 +1,6 @@
 class Solution {
     public boolean checkOnesSegment(String s) {
         int n = s.length();
-        //int segments = 0;
-
         if(n == 1 && s.charAt(0) == '1')return true;
 
         //There are no leading zeros that's means it will always start
@@ -15,7 +13,7 @@ class Solution {
         if(first == n-1)return true; //all were 1's
 
         while(first < n){
-           if(s.charAt(first) == '1')return false;
+           if(s.charAt(first) == '1')return false; //second Segment mil gya
            first++;
         }
 
