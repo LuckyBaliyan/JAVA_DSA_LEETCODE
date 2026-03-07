@@ -2,7 +2,9 @@ class Solution {
     public int minFlips(String s) {
         int n = s.length();
 
-        s = s+s; //make up the string n + n to cover all type1 rotations
+       // s = s+s; 
+       //make up the string n + n to cover all type1 rotations
+       //but we avoid making n+n string with modulo operator
         
         StringBuilder s1 = new StringBuilder();    
         StringBuilder s2 = new StringBuilder();
@@ -21,13 +23,13 @@ class Solution {
         int j = 0;
 
         while(j<2*n){
-            if(s.charAt(j) != s1.charAt(j))flip1++;
-            if(s.charAt(j) != s2.charAt(j))flip2++;
+            if(s.charAt(j % n) != s1.charAt(j))flip1++;
+            if(s.charAt(j % n) != s2.charAt(j))flip2++;
 
             //when window size exceed n
             if(j-i+1>n){
-                if(s.charAt(i)!= s1.charAt(i))flip1--;
-                if(s.charAt(i)!= s2.charAt(i))flip2--;
+                if(s.charAt(i % n)!= s1.charAt(i))flip1--;
+                if(s.charAt(i % n)!= s2.charAt(i))flip2--;
 
                 //finally move window 
                 i++;
