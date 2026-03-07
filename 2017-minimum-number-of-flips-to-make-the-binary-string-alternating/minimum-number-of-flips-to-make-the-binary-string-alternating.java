@@ -6,6 +6,9 @@ class Solution {
        //make up the string n + n to cover all type1 rotations
        //but we avoid making n+n string with modulo operator
         
+        /* we can even optimize it with check alternate character at 
+        each index inside inner loop
+        
         StringBuilder s1 = new StringBuilder();    
         StringBuilder s2 = new StringBuilder();
 
@@ -14,6 +17,7 @@ class Solution {
             s1.append((i%2 == 0? '0':'1'));
             s2.append((i%2 == 0? '1':'0'));
         }
+        */
 
         int flip1 = 0;
         int flip2 = 0;
@@ -23,14 +27,20 @@ class Solution {
         int j = 0;
 
         while(j<2*n){
-            if(s.charAt(j % n) != s1.charAt(j))flip1++;
-            if(s.charAt(j % n) != s2.charAt(j))flip2++;
+            char expected1 = (j%2 == 0?'0':'1');
+            char expected2 = (j%2 == 0?'1':'0');
+
+            if(s.charAt(j % n) != expected1)flip1++;
+            if(s.charAt(j % n) != expected2)flip2++;
 
             //when window size exceed n
             if(j-i+1>n){
-                if(s.charAt(i % n)!= s1.charAt(i))flip1--;
-                if(s.charAt(i % n)!= s2.charAt(i))flip2--;
+                char expectedi1 = (i%2 == 0?'0':'1');
+                char expectedi2 = (i%2 == 0?'1':'0');
 
+                if(s.charAt(i % n)!= expectedi1)flip1--;
+                if(s.charAt(i % n)!= expectedi2)flip2--;
+                
                 //finally move window 
                 i++;
             }
