@@ -1,5 +1,9 @@
 class Solution {
     public String findDifferentBinaryString(String[] nums) {
+        return approach1(nums);
+    }
+
+    public static String approach1(String [] nums){
         int n = nums.length;
 
         HashSet<String> st = new HashSet<>();
