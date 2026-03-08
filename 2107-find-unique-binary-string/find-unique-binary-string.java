@@ -1,6 +1,22 @@
 class Solution {
     public String findDifferentBinaryString(String[] nums) {
-        return approach1(nums);
+       // return approach1(nums); TC --> O(2^N) SC:--> O(3N)
+
+       //approach 2 based on Cantor's Diagonalization
+       return approach2(nums);
+    }
+
+    public static String approach2(String [] nums){
+        int n = nums.length;
+
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0;i<n;i++){
+            //get the diagonal character
+            char ch = nums[i].charAt(i);
+            sb.append((ch == '0'?'1':'0'));
+        }
+
+        return sb.toString();
     }
 
     public static String approach1(String [] nums){
