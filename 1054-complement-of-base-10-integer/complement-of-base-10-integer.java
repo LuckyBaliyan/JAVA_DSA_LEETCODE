@@ -4,7 +4,20 @@ class Solution {
         // return approach1(n);
 
         //O(log n) , O(1)
-        return approach2(n);
+        // return approach2(n);
+
+        //O(log 32), O(1)
+        return approach3(n);
+    }
+
+    public static int approach3(int n){
+        if(n==0)return 1;
+
+        int bits = (int)(Math.floor(Math.log(n) / Math.log(2))) + 1;
+        int mask = (1<<bits) - 1;
+        //shift bits times to make 1 1 1 for 3 bits times
+
+        return mask ^ n;
     }
 
     public static int approach2(int n){
