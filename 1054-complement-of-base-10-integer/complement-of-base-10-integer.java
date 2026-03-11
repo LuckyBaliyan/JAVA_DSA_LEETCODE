@@ -1,6 +1,11 @@
 class Solution {
     public int bitwiseComplement(int n) {
-        String binary = Integer.toBinaryString(n);
+        // O(n), O(n)
+        return approach1(n);
+    }
+
+    public static int approach1(int n){
+          String binary = Integer.toBinaryString(n);
 
         StringBuilder sb = new StringBuilder();
 
