@@ -17,7 +17,7 @@ class Solution {
     public static int solveTab(int [] nums){
         int n = nums.length;
 
-        dp = new int [n+1];
+        dp = new int [n];
         //base case and i'm standing at 0 
         dp[0] = nums[0];
 
