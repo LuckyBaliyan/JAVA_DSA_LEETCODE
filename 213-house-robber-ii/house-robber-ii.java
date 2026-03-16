@@ -6,10 +6,35 @@ class Solution {
     public int rob(int[] nums) {
         // return approach1(nums); -->O(N * SUM * 2) and O(N*SUM*2) give MLE
 
-        dp = new int [nums.length][2];
-        for(int [] arr:dp)Arrays.fill(arr,-1);
+       /* dp = new int [nums.length][2];
+        for(int [] arr:dp)Arrays.fill(arr,-1);*/
 
-        return approach2(nums,0,nums.length,0);
+        // O(N), O(N+N)
+        //return approach2(nums,0,nums.length,0);
+
+        return solveTab(nums);
+    }
+
+    public static int solveTab(int [] nums){
+        int n = nums.length;
+
+        dp = new int [n][2];
+        dp[0][0] = 0; //don't rob it
+        dp[0][1] = nums[0]; //rob it
+
+        for(int i = 1;i<n;i++){
+            for(int j = 0;j<2;j++){
+               int prof1 = dp[i-1][j];
+               int prof2 = (i-2 < 0)? nums[i]:(nums[i] + dp[i-2][j]);
+
+                if(i == n-1 && j == 1)
+                prof2 = Integer.MIN_VALUE;
+
+               dp[i][j] = Math.max(prof1,prof2);
+            }
+        }
+
+        return Math.max(dp[n-1][0],dp[n-1][1]);
     }
 
     public static int approach2(int [] nums,int i,int n,int flag){
@@ -21,7 +46,7 @@ class Solution {
 
         int notTake = approach2(nums,i+1,n,flag);
         int take = 0;
-        
+
         if(i == 0){
             take = nums[i] + approach2(nums,i+2,n,1);
         }
