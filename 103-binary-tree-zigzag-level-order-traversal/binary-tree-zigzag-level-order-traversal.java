@@ -27,9 +27,7 @@ class Solution {
 
         if(res.size() == level)res.add(new ArrayList<>());
 
-        boolean flag = (level % 2 == 0);
-
-        if(flag){
+        if(level % 2 == 0){
            res.get(level).add(root.val);
         }
         else{
