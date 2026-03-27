@@ -5,15 +5,19 @@ class Solution {
 
         k = k % m;
 
+        //if k % n == 0 i.e we will surely get back to original stage
         if(k == 0)return true;
         
+        //temp matrix for later comparision
         int [][] temp = new int [n][m];
 
         for(int i = 0;i<n;i++){
             if(i % 2 == 0){
+                //perform leftShift
                 leftShift(i,mat,temp,k);
             }
             else{
+                //perform right shifts
                 rightShift(i,mat,temp,k);
             }
         }
@@ -39,7 +43,8 @@ class Solution {
         //shift k times
         for(int i = k;i>0;i--){
             int first = temp[row][0];
-
+          
+            //middle elements will be same
             for(int j = 0;j<m-1;j++)temp[row][j] = temp[row][j+1];
 
             temp[row][m-1] = first; 
