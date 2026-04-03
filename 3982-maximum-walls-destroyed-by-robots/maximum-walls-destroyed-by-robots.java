@@ -41,6 +41,7 @@ class Solution {
     }
     
     int countWalls(int [] walls, int l, int r){
+       //finding the no of walls in b/w those ranges 
        int left = lowerBound(walls, l);
        int right = upperBound(walls, r);
 
