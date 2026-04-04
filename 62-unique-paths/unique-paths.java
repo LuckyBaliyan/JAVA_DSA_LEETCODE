@@ -10,7 +10,7 @@ class Solution {
     }
 
     public static int solveTab(int n, int m){
-        int [][] dp = new int [n][m];
+        /*int [][] dp = new int [n][m];
 
         //base case:- 
         dp[0][0] = 1;
@@ -26,8 +26,21 @@ class Solution {
                dp[i][j] = up + down;
             }
         }
-
         return dp[n-1][m-1];
+        */
+
+        int [] dp = new int [m];
+
+        //fill each column with 1 for row(0)
+        for(int i = 0;i<m;i++)dp[i] = 1;
+
+        for(int i = 1;i<n;i++){
+            for(int j = 1;j<m;j++){
+                dp[j] = dp[j] + dp[j-1];
+            }
+        }
+
+        return dp[m-1];
     }
 
     public static int solveRec(int n, int m){
