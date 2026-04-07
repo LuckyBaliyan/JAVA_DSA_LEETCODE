@@ -30,7 +30,7 @@ class Robot {
     public void step(int num) {
         isMoved = true;
 
-        num = num % pos.size();   // 🔥 FIX
+        num = num % pos.size(); 
         idx = (idx + num) % pos.size();
     }
     
