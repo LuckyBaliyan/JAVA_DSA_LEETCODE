@@ -10,12 +10,15 @@ class Solution {
             arr[i][1] = growTime[i];
         }
 
-        //sort on the basis of growTime
+        //sort on the basis of growTime in descending
         Arrays.sort(arr,(a,b)-> b[1] - a[1]);
 
         int maxBlom = Integer.MIN_VALUE;
         int currDay = 0;
 
+       //finally compute the max total bloomTime = plantTime + growTime
+       //but in greedy manner like sorted in desc so that time taking plants
+       // can be planted early 
         for(int i = 0; i< n;i++){
             currDay += arr[i][0];
             maxBlom = Math.max(maxBlom, currDay + arr[i][1]);
