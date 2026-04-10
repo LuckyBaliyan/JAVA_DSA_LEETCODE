@@ -1,61 +1,33 @@
 class Solution {
+    static int [][] dp;
     public boolean canPartition(int[] nums) {
+        int sum = 0;
         int n = nums.length;
-        int sum  = 0;
-        for(int num : nums)sum+=num;
-        if(sum % 2 == 1)return false;
-        boolean [][] dp = new boolean [n][sum/2+1];
-        return solveTab(nums,n,sum/2,dp);
+        for(int i = 0;i<n;i++)sum += nums[i];
+        //if the total sum is odd so array can't be splitted in 2 equal parts
+        if(sum % 2 != 0)return false;
+        
+        //half part subset sum
+        int target = sum / 2;
+        dp = new int [n][target + 1];
+
+        for(int [] a: dp)Arrays.fill(a,-1);
+
+        return solve(nums,n-1,target) == 1 ? true : false;
     }
 
-  /* plain recursion 
-    public boolean solve(int [] nums,int i,int sum){
-        if(sum== 0)return true;
-        if(i == 0)return nums[i] == sum;
+    int solve(int [] arr, int n,int target){
+        //if we are able to find 1 subset rest must also equal
+        if(target == 0)return 1;
 
-        if(nums[i] <= sum){
-            return solve(nums,i-1,sum-nums[i]) || solve(nums,i-1,sum);
-        }
-        else return solve(nums,i-1,sum);
-    }
-    */
+        if(target < 0)return 0;
+        if(n < 0)return 0;
 
-    //MemoiZation
-    public boolean solve(int [] nums,int i,int sum,Boolean [][] dp){
-        if(sum== 0)return true;
-        if(i == 0)return nums[i] == sum;
-        if(dp[i][sum] != null)return dp[i][sum];
+        if(dp[n][target] != -1)return dp[n][target];
 
-        if(nums[i] <= sum){
-            return dp[i][sum]  = solve(nums,i-1,sum-nums[i],dp) || solve(nums,i-1,sum,dp);
-        }
-        else return dp[i][sum] = solve(nums,i-1,sum,dp);
-    }
+        int skip = solve(arr,n-1,target);
+        int take = solve(arr,n-1,target - arr[n]);
 
-    public boolean solveTab(int [] nums,int n,int sum,boolean [][] dp){
-        //filling up the first row
-        for(int i = 0;i<n;i++){
-            dp[i][0] = true;
-        }
-
-        //first condition matching case
-        if(nums[0]<= sum){
-            dp[0][nums[0]] = true;
-        }
-
-        for(int i = 1;i<n;i++){
-            for(int s = 1;s<=sum;s++){
-                boolean notTake = dp[i-1][s];
-                boolean take = false;
-
-                if(nums[i] <= s){
-                    take = dp[i-1][s-nums[i]];
-                }
-
-                dp[i][s] = take || notTake;
-            }
-        }
-
-        return dp[n-1][sum];
+        return dp[n][target] = ((skip == 0) && (take == 0)) ? 0 : 1;
     }
 }
