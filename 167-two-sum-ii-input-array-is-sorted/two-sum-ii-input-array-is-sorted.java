@@ -5,7 +5,25 @@ class Solution {
         if(n <= 1)return new int [] {-1, -1};
 
         //Approach 1:- BS + diff O(N*LOG N)
-        return solve1(numbers, target);
+       //return solve1(numbers, target);
+
+       //Approach 2:- two pointers O(N)
+       return solve2(numbers, target);
+    }
+
+    public static int[] solve2(int [] arr, int t){
+        int l = 0;
+        int r = n-1;
+
+        while(l <= r){
+            int sum = arr[l] + arr[r];
+
+            if(sum == t)return new int [] {l + 1, r + 1};
+            else if(sum < t)l++;
+            else r--;
+        }
+
+        return new int [] {-1, -1};
     }
 
     public static int [] solve1(int [] arr, int t){
