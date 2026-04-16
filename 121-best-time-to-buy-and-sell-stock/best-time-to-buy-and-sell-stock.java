@@ -4,17 +4,15 @@ class Solution {
         int maxProfit = Integer.MIN_VALUE;
 
         int buy = prices[0];
-        int sell = prices[0];
+        //int sell = prices[0];
 
         for(int i = 0; i<n; i++){
             if(prices[i] < buy){
                 buy = prices[i];
-                sell = prices[i];
+                //sell = prices[i];
             }
-            else{
-                sell = prices[i];
-                maxProfit = Math.max(maxProfit, sell - buy);
-            }
+
+            maxProfit = Math.max(maxProfit, prices[i] - buy);
         }
 
         return  maxProfit == Integer.MIN_VALUE? 0: maxProfit;
