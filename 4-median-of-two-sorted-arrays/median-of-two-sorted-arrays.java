@@ -1,4 +1,29 @@
 class Solution {
+    public double findMedianSortedArrays(int[] a, int[] b) {
+        int n = a.length, m = b.length;
+        int[] merged = new int[n + m];
+
+        int i = 0, j = 0, k = 0;
+
+        while (i < n && j < m) {
+            if (a[i] <= b[j]) merged[k++] = a[i++];
+            else merged[k++] = b[j++];
+        }
+
+        while (i < n) merged[k++] = a[i++];
+        while (j < m) merged[k++] = b[j++];
+
+        int len = n + m;
+
+        if (len % 2 == 1) {
+            return merged[len / 2];
+        } else {
+            return (merged[len / 2] + merged[len / 2 - 1]) / 2.0;
+        }
+    }
+
+
+/*class Solution {
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
         
         int m = nums1.length;
@@ -109,5 +134,4 @@ class Solution {
         }
 */
  
-    }
 }
