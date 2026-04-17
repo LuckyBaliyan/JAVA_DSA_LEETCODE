@@ -1,28 +1,28 @@
 class Solution {
     public boolean isMatch(String s, String p) {
-        return solve(s, p);
+        return solve(0, 0, s, p);
     }
 
-    public static boolean solve(String s, String p){
-        if(p.length() == 0){
-            if(s.length() == 0)return true;
+    public static boolean solve(int i, int j, String s, String p){
+        if(j == p.length()){
+            if(i == s.length())return true;
             return false;
         }
 
         boolean matched = false;
 
-        if(s.length() > 0 && 
-        (p.charAt(0) == s.charAt(0) || p.charAt(0) == '.'))
+        if(i < s.length() && 
+        (p.charAt(j) == s.charAt(i) || p.charAt(j) == '.'))
         matched = true;
 
-        if(p.length() >=2 && p.charAt(1) == '*'){
-            boolean take  = matched && solve(s.substring(1), p);
-            boolean skip = solve(s, p.substring(2)); 
+        if(j + 1 < p.length() && p.charAt(j + 1) == '*'){
+            boolean take  = matched && solve(i+1, j, s, p);
+            boolean skip = solve(i, j+2, s, p); 
             //dont take .*
 
             return take || skip;
         }
 
-        return matched && solve(s.substring(1), p.substring(1));
+        return matched && solve(i+1, j+1, s, p);
     }
 }
