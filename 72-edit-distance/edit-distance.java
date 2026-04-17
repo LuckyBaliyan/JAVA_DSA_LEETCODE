@@ -1,32 +1,34 @@
 class Solution {
-    static int n1;
-    static int n2;
-
-    static int [][] dp;
-
     public int minDistance(String word1, String word2) {
-        n1 = word1.length();
-        n2 = word2.length();
+        int n = word1.length();
+        int m = word2.length();
 
-        dp = new int [n1][n2];
-        for(int [] d: dp)Arrays.fill(d, -1);
-        
-        return solve(0, 0, word1, word2);
-    }
+        int [][] dp = new int [n + 1][m + 1];
+        //because we are going to return len not index
 
-    public int solve(int i, int j, String w1, String w2){
-        if(i == n1)return n2 - j;
-        if(j == n2)return n1 - i;
 
-        if(dp[i][j] != -1)return dp[i][j];
+        //base case how many opr lead to make w2 and w1 if other is 0th len
+        for(int i = 0; i<=n; i++){
+            dp[i][0] = i;
+        }
 
-        if(w1.charAt(i) == w2.charAt(j))
-        return dp[i][j] =  solve(i+1, j+1, w1, w2);
+        for(int j = 0; j<=m; j++)dp[0][j] = j;
 
-        int insert = solve(i, j+1, w1, w2);
-        int delete = solve(i+1, j, w1, w2);
-        int replace = solve(i+1, j+1, w1, w2);
+        for(int i = 1; i<=n; i++){
+            for(int j = 1; j<=m; j++){
+                //check prev since we start from 1,1
+                if(word1.charAt(i-1) == word2.charAt(j-1))
+                dp[i][j] = dp[i-1][j-1];
+                else{
+                    int insert = dp[i][j-1];
+                    int delete = dp[i-1][j];
+                    int replace = dp[i-1][j-1];
 
-        return dp[i][j] =  1 + Math.min(insert, Math.min(delete, replace));
+                    dp[i][j] = 1 + Math.min(insert, Math.min(delete, replace));
+                }
+            }
+        }
+
+        return dp[n][m];
     }
 }
