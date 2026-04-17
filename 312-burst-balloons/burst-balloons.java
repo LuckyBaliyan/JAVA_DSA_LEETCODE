@@ -1,37 +1,32 @@
 class Solution {
-    static int [][] dp;
     public int maxCoins(int[] nums) {
         int n = nums.length;
 
-        // Create new array with boundaries
-        int[] arr = new int[n + 2];
-        arr[0] = arr[n + 1] = 1;
+        int [] arr = new int [n+2];
+        arr[0] = arr[n+1] = 1;
 
-        for (int i = 0; i < n; i++) {
-            arr[i + 1] = nums[i];
+        for(int i = 0; i<n; i++){
+            arr[i+1] = nums[i];
         }
 
-        dp = new int [n + 1][n + 1];
-        for(int [] d: dp)Arrays.fill(d, -1);
+        int [][] dp = new int [n+2][n+2];
 
-        return solve(arr, 1, n);
-    }
+        for(int i = n; i>=1; i--){ 
+            for(int j = 1; j<=n; j++){
+                if(i>j)continue; //base case
+               
+                int max = Integer.MIN_VALUE;
+                for(int k = i; k<=j; k++){
+                    int cost = arr[i-1] * arr[k] * arr[j+1] + 
+                    dp[i][k-1] + dp[k+1][j];
 
-    public int solve(int[] arr, int i, int j) {
-        if (i > j) return 0;
-        int max = 0;
+                    max = Math.max(max, cost);
+                }
 
-        if(dp[i][j] != -1)return dp[i][j];
-
-        for (int k = i; k <= j; k++) {
-
-            int cost = arr[i - 1] * arr[k] * arr[j + 1]
-                     + solve(arr, i, k - 1)
-                     + solve(arr, k + 1, j);
-
-            max = Math.max(max, cost);
+                dp[i][j] = max;
+            }
         }
 
-        return dp[i][j] = max;
+        return dp[1][n];
     }
 }
