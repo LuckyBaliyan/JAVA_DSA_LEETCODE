@@ -4,7 +4,6 @@ class Solution {
 
         if(n == 1)return 1;
 
-        int unique = 1;
         int prev = 0;
         int next = 1;
 
