@@ -3,30 +3,35 @@ class Solution {
         int n = grid.length;
         int m = grid[0].length;
 
-        boolean [][] visited = new boolean [n][m];
-        int cnt = 0;
+        boolean [][] visited = new boolean  [n][m];
 
-        for(int i = 0;i<n;i++){
-            for(int j = 0;j<m;j++){
-               if(grid[i][j] == '1' && !visited[i][j]){
-                  dfs(grid,visited,i,j,n,m);
-                  cnt++;
-               }
+        int isLands  = 0;
+        for(int i = 0; i<n; i++){
+            for(int j = 0; j<m; j++){
+                if(grid[i][j] == '1' && !visited[i][j]){
+                    dfs(grid, i, j, n, m, visited);
+                    isLands++;
+                }
             }
         }
 
-        return cnt;
+        return isLands;
     }
 
-    public static void dfs(char [][] grid,boolean [][] visited,int i,int j,int n,int m){
+    public static void dfs(char [][] arr,int i, int j, int n, int m, 
+    boolean [][] visited){
         visited[i][j] = true;
-        if(i + 1 < n && !visited[i+1][j] && grid[i+1][j] == '1')
-        dfs(grid,visited,i+1,j,n,m);
-        if(i>0 && !visited[i-1][j] && grid[i-1][j] == '1')
-        dfs(grid,visited,i-1,j,n,m);
-        if(j>0 && !visited[i][j-1] && grid[i][j-1] == '1')
-        dfs(grid,visited,i,j-1,n,m);
-        if(j+1 < m && !visited[i][j+1] && grid[i][j+1] == '1')
-        dfs(grid,visited,i,j+1,n,m);
+
+        if(i - 1 >=0 && !visited[i-1][j] && arr[i-1][j] == '1')
+        dfs(arr, i-1, j, n, m, visited);
+
+        if(i+1 < n && !visited[i+1][j] && arr[i+1][j] == '1')
+        dfs(arr, i+1, j, n, m, visited);
+
+        if(j - 1 >= 0 && !visited[i][j-1] && arr[i][j-1] == '1')
+        dfs(arr, i, j-1, n, m, visited);
+
+        if(j + 1 < m && !visited[i][j+1] && arr[i][j+1] == '1')
+        dfs(arr, i, j+1, n, m, visited);
     }
 }
