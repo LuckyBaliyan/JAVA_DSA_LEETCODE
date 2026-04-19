@@ -1,102 +1,48 @@
-    class Solution {
-        public int splitArray(int[] nums, int k) {
-            int n = nums.length;
-   /*  BS ON ANSWERS
-            if(n < k)return -1;
+class Solution {
+    public int splitArray(int[] nums, int k) {
+        int n = nums.length;
+        int max = Integer.MIN_VALUE;
+        int sum = 0;
 
-            int lb = 0;
-            int ub = 0;
-
-            for(int i = 0;i<n;i++){
-            lb  = Math.max(lb,nums[i]);
-            ub += nums[i];
-            }
-
-            int  l = lb;
-            int r =ub;
-
-            while(l<=r){
-                int mid = l+(r - l)/2;
-                if(solve(nums,mid,k,n))r = mid-1;
-                else l = mid+1;
-            }
-
-            return l;
-*/
-         //return solveRec(nums,0,n,k);
-         int [][] dp = new int [n+1][k+1];
-         for(int [] arr:dp)Arrays.fill(arr,-1);
-         return solveRecMemo(nums,0,n,k,dp);
+        for(int num : nums){
+            max = Math.max(max, num);
+            sum += num;
         }
+        
+        return solveBs(nums, n, k, max, sum);
+    }
 
-/*   BS ON ANSWERS
-        public static boolean solve(int [] arr,int max,int k,int n){
-            int sum = 0;
-            int subArrays = 1;
+    public static int solveBs(int [] arr, int n, int k, int l, int h){
+        int ans = 0;
+        while(l <= h){
+            int mid = l + (h - l)/2;
 
-            for(int i = 0;i<n;i++){
-                if(arr[i] > max)return false;
-                if(arr[i]+sum <= max){
-                sum += arr[i];
-                }
-                else{
-                    subArrays++;
-                    sum = arr[i];
-                }
+            if(canPartition(arr, mid, k)){
+               ans = mid;
+               h = mid - 1; //okay lets check for min possible
             }
-
-            return subArrays <= k;
-        }
-    */
- /*  PLAIN RECURSION
-    public static int solveRec(int [] arr,int i,int n,int k){
-        //BASE CASE
-        if(k == 1){
-            int sum = 0;
-            for(int j = i;j<n;j++)sum += arr[j];
-            return sum;
-        }
-
-        int currSum = 0;
-        int ans = Integer.MAX_VALUE;
-
-        for(int j = i;j<=n-k;j++){
-            currSum += arr[j];
-
-            int right = solveRec(arr,j+1,n,k-1);
-            int max = Math.max(right,currSum);
-
-            ans = Math.min(ans,max);
+            else{
+                l = mid + 1; //found larger value
+            }
         }
 
         return ans;
     }
-    */
 
-    //Memoization
-    public static int solveRecMemo(int [] arr,int i,int n,int k,int [][] dp){
-        //BASE CASE
-        if(k == 1){
-            int sum = 0;
-            for(int j = i;j<n;j++)sum += arr[j];
-            return sum;
+    public static boolean canPartition(int [] arr, int bound, int k){
+        int used = 1;
+        int sum = 0;
+
+        if(bound < arr[0])return false;
+
+        for(int i = 0;i<arr.length;i++){
+            if(sum + arr[i] > bound){
+                used++;
+                sum = arr[i];
+            }
+            else sum += arr[i];
         }
 
-        if(dp[i][k] != -1)return dp[i][k];
-
-        int currSum = 0;
-        int ans = Integer.MAX_VALUE;
-
-        for(int j = i;j<=n-k;j++){
-            currSum += arr[j];
-
-            int right = solveRecMemo(arr,j+1,n,k-1,dp);
-            int max = Math.max(right,currSum);
-
-            ans = Math.min(ans,max);
-        }
-
-        return dp[i][k] = ans;
+        return used <= k;
     }
-    
 }
