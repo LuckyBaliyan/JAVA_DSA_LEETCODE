@@ -1,40 +1,44 @@
 class Solution {
     public boolean canFinish(int numCourses, int[][] prerequisites) {
-        // 2 ways either detect a cycle or use topologicalSort via bfs
-
-        int [] visited = new int [numCourses];
         ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
 
-        for(int i = 0;i<numCourses;i++){
-            adj.add(new ArrayList<>());
+        for(int i = 0; i<numCourses; i++)adj.add(new ArrayList<>());
+
+        for(int [] p: prerequisites){
+           //make dependecy fom b --> a
+           adj.get(p[1]).add(p[0]);
         }
 
-        for(int [] e:prerequisites){
-            adj.get(e[0]).add(e[1]);
-        }
+        int [] inDegree = new int [numCourses];
 
-        for(int i = 0;i<numCourses;i++){
-            if(visited[i] == 0){
-                if(dfs(adj,visited,i))return false;
+        for(int i = 0; i<numCourses; i++){
+            for(int ne: adj.get(i)){
+                inDegree[ne]++;
             }
         }
 
-        return true;
-    }
+        Queue<Integer> q = new LinkedList<>();
 
-    public static boolean dfs(ArrayList<ArrayList<Integer>> adj,int [] visited,
-    int node){
-        visited[node] = 2;
-
-        for(int ne:adj.get(node)){
-            if(visited[ne] == 0){
-                if(dfs(adj,visited,ne))return true;
+        //add all 0 indegree src to queue
+        for(int i = 0; i < numCourses; i++){
+            if(inDegree[i] == 0){
+               q.offer(i);
             }
-
-            else if (visited[ne] == 2)return true;
         }
 
-        visited[node] = 1;
-        return false;
+        int used = 0;
+
+        while(!q.isEmpty()){
+            int curr = q.poll();
+            used++;
+
+            for(int ne : adj.get(curr)){
+                inDegree[ne]--;
+
+                if(inDegree[ne] == 0)q.offer(ne);
+            }
+        }
+
+        return used == numCourses;
     }
 }
