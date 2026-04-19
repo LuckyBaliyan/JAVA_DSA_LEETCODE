@@ -1,48 +1,38 @@
 class Solution {
+    static int [][] dp;
     public int splitArray(int[] nums, int k) {
         int n = nums.length;
-        int max = Integer.MIN_VALUE;
-        int sum = 0;
+        dp = new int [n][k+1];
 
-        for(int num : nums){
-            max = Math.max(max, num);
-            sum += num;
-        }
-        
-        return solveBs(nums, n, k, max, sum);
+        for(int [] d : dp)Arrays.fill(d, -1);
+
+        return solve(nums, 0, n, k);
     }
 
-    public static int solveBs(int [] arr, int n, int k, int l, int h){
-        int ans = 0;
-        while(l <= h){
-            int mid = l + (h - l)/2;
+    public static int solve(int [] arr, int i,  int n, int k){
+        //if last partiton
+        if(k == 1){
+            int sum = 0;
+            for(int x = i; x < n; x++){
+                sum += arr[x];
+            }
 
-            if(canPartition(arr, mid, k)){
-               ans = mid;
-               h = mid - 1; //okay lets check for min possible
-            }
-            else{
-                l = mid + 1; //found larger value
-            }
+            return sum;
         }
 
-        return ans;
-    }
+        if(dp[i][k] != -1)return dp[i][k];
 
-    public static boolean canPartition(int [] arr, int bound, int k){
-        int used = 1;
         int sum = 0;
+        int ans = Integer.MAX_VALUE;
 
-        if(bound < arr[0])return false;
-
-        for(int i = 0;i<arr.length;i++){
-            if(sum + arr[i] > bound){
-                used++;
-                sum = arr[i];
-            }
-            else sum += arr[i];
+        for(int j = i; j<= n-k; j++){
+            sum += arr[j];
+            int next = solve(arr, j+1, n, k-1);
+            
+            int maxPart = Math.max(sum, next);
+            ans = Math.min(ans, maxPart);
         }
 
-        return used <= k;
+        return dp[i][k] = ans;
     }
 }
