@@ -1,50 +1,46 @@
 class Solution {
-    static class Tuple{
-        int node,cost,stop;
-
-        Tuple(int node,int cost,int stop){
-            this.node = node;
-            this.cost = cost;
-            this.stop = stop;
+    static class Node{
+        int v, w, s;
+        Node(int v, int w, int s){
+            this.v = v;
+            this.w = w;
+            this.s = s;
         }
     }
     public int findCheapestPrice(int n, int[][] flights, int src, int dst, int k) {
-        ArrayList<ArrayList<Tuple>> adj = new ArrayList<>();
+        ArrayList<ArrayList<Node>> adj = new ArrayList<>();
 
-        for(int i = 0;i<n;i++){
-            adj.add(new ArrayList<>());
+        for(int i = 0; i<=n; i++)adj.add(new ArrayList<>());
+
+        for(int [] f : flights){
+            adj.get(f[0]).add(new Node(f[1], f[2], 0));
         }
 
-        for(int [] e:flights){
-            adj.get(e[0]).add(new Tuple(e[1],e[2],0));
-        }
+        PriorityQueue<Node> pq =
+        new PriorityQueue<>((a,b)->Integer.compare(a.w, b.w));
 
-        PriorityQueue<Tuple> pq = 
-        new PriorityQueue<>((a,b)->Integer.compare(a.cost,b.cost));
+        int [][] steps = new int [n][k+2];
+        for(int [] s : steps)Arrays.fill(s, Integer.MAX_VALUE);
 
-        int [][] dist = new int [n][k+2]; // for each stop there will be stop + 1 edges
-        for(int [] arr:dist)Arrays.fill(arr,Integer.MAX_VALUE);
-
-        dist[src][0] = 0; 
-        pq.offer(new Tuple(src,0,0));
+        steps[src][0] = 0;
+        pq.offer(new Node(src, 0, 0)); //maximum stops allowed
 
         while(!pq.isEmpty()){
-           Tuple curr = pq.poll();
-           int node = curr.node;
-           int cost = curr.cost;
-           int stops = curr.stop;
+            Node curr = pq.poll();
+            int d = curr.w;
 
-           if(node == dst)return cost;
+            if(curr.v == dst)return curr.w;
 
-           if(stops > k)continue; 
+           if(curr.s <= k){
+                for(Node ne : adj.get(curr.v)){
+                    int v = ne.v;
+                    int cost = d + ne.w;
 
-           for(Tuple ne:adj.get(node)){
-            int v = ne.node;
-            int newCost = cost + ne.cost;
-            if(newCost < dist[v][stops + 1]){
-                dist[v][stops + 1] = newCost;
-                pq.offer(new Tuple(v,newCost,stops + 1));
-            }
+                    if(cost < steps[v][curr.s+1]){
+                      steps[v][curr.s + 1] = cost;
+                      pq.offer(new Node(v, cost, curr.s + 1));
+                    }
+                }
            }
         }
 
