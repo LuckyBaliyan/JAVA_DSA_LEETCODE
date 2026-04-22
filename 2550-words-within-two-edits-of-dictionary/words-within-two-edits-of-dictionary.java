@@ -1,6 +1,5 @@
 class Solution {
     boolean hasMatch(String query, String[] dictionary) {
-        boolean found = false;
         for (String dict : dictionary) {
             int diffMax = 2;
             for (int i=0;i<dict.length();i++) {
@@ -16,7 +15,7 @@ class Solution {
             }
         }
 
-        return found;
+        return false;
     }
 
     public List<String> twoEditWords(String[] queries, String[] dictionary) {
