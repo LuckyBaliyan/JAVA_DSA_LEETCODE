@@ -10,24 +10,65 @@
  */
 class Solution {
     public ListNode sortList(ListNode head) {
-        PriorityQueue<ListNode> pq = 
-        new PriorityQueue<>((a,b)->Integer.compare(a.val, b.val));
+        return ms(head);
+    }
 
-        ListNode temp = head;
-        while(temp != null){
-            pq.offer(temp);
-            temp = temp.next;
+    public ListNode ms(ListNode head){
+        if(head == null || head.next == null)return head;
+
+        ListNode mid = findMid(head);
+        ListNode leftHead = head;
+        ListNode rightHead = mid.next;
+        mid.next = null; //break the connection to seprate the list
+        
+        leftHead = ms(leftHead);
+        rightHead = ms(rightHead);
+
+        return merge(leftHead, rightHead);
+    }
+
+    public static ListNode findMid(ListNode head){
+        ListNode slow = head;
+        ListNode fast = head.next;
+
+        while(fast != null && fast.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
         }
 
+        return slow;
+    }
+
+    public static ListNode merge(ListNode l1, ListNode l2){
         ListNode dummy = new ListNode(-1);
-        ListNode temp2 = dummy;
+        ListNode temp = dummy;
 
-        while(!pq.isEmpty()){
-            temp2.next = pq.poll();
-            temp2 = temp2.next;
+        while(l1 != null && l2 != null){
+            if(l1.val < l2.val){
+                temp.next = l1;
+                temp = l1;
+                l1 = l1.next;
+            }
+            else{
+                temp.next = l2;
+                temp = l2;
+                l2 = l2.next;
+            }
         }
 
-        temp2.next = null;
+        //fill remaining 
+        while(l1 != null){
+            temp.next = l1;
+            temp = l1;
+            l1 = l1.next;
+        }
+
+        while(l2 != null){
+            temp.next = l2;
+            temp = l2;
+            l2 = l2.next;
+        }
+
         return dummy.next;
     }
 }
