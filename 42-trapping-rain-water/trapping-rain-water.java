@@ -1,6 +1,5 @@
 class Solution {
     public int trap(int[] height) {
-        //Brute Force Approach 
         int n = height.length;
 
         int water  = 0;
