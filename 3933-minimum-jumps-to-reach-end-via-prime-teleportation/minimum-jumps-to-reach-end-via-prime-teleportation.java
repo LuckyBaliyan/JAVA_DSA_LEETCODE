@@ -16,6 +16,7 @@ class Solution {
             }
         }
     }
+    
     public int minJumps(int[] nums) {
         int n = nums.length;
 
