@@ -11,7 +11,7 @@
 class Solution {
     public int pairSum(ListNode head) {
        // return approach1(head); TC:- O(N) SC:- O(N)
-       return approach2(head);
+       return approach2(head); //TC:- O(N) SC:- O(1)
     }
 
     public static int approach1(ListNode head){
